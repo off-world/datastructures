@@ -59,24 +59,24 @@ typedef void *Any;
 typedef void (*PFiter) (Key, Any);
 
 
-/* initialize a hashmap */
+/* initialize hashmap */
 extern int hm_init (Hashmap *hm);
 
-/* delete a hashmap */
+/* delete hashmap */
 extern int hm_free (Hashmap hm);
 
-/* retreive the value to a given key from the hashmap */
+/* retreive value from hashmap */
 extern int hm_lookup (Hashmap hm, Key key, Any *value);
 
-/* update the value of a given key or create the binding if not exists */
+/* update key or create new binding if not exists */
 extern int hm_insert (Hashmap hm, Key key, Any value);
 
-/* remove a binding from the hashmap */
+/* remove binding from hashmap */
 extern int hm_remove (Hashmap hm, Key key);
 
-/* iterate the hashmap and call f for each key-value pair */
+/* iterate hashmap and call f for each key-value pair */
 extern int hm_iter (Hashmap hm, PFiter f);
 
-/* retreive the current count of bindings from the hashmap*/
+/* retreive current count of bindings from hashmap*/
 extern int hm_count (Hashmap hm, size_t *count);
 
