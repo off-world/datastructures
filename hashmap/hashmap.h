@@ -77,7 +77,6 @@ extern int hm_remove (Hashmap hm, Key key);
 /* iterate the hashmap and call f for each key-value pair */
 extern int hm_iter (Hashmap hm, PFiter f);
 
-/* get the current count of bindings from the hasmap*/
-extern size_t hm_count (Hashmap hm);
-
+/* retreive the current count of bindings from the hasmap*/
+extern int hm_count (Hashmap hm, size_t *count);
 
