@@ -149,7 +149,7 @@ find_slot (hashmap *map, Key key, size_t *index)
 
 }
 
-/* grow the table and rehash all keys */
+/* grow table and rehash all keys */
 static int
 resize (hashmap *map)
 {
@@ -210,7 +210,7 @@ resize (hashmap *map)
 }
 
 
-/* initialize a hashmap */
+/* initialize hashmap */
 int
 hm_init (Hashmap *hm)
 {
@@ -239,7 +239,7 @@ hm_init (Hashmap *hm)
 }
 
 
-/* delete a hashmap */
+/* delete hashmap */
 int
 hm_free (Hashmap hm)
 {
@@ -257,7 +257,7 @@ hm_free (Hashmap hm)
 }
 
 
-/* retreive the value to a given key from the hashmap */
+/* retreive value of given key from hashmap */
 int
 hm_lookup (Hashmap hm, Key key, Any *value)
 {
@@ -297,7 +297,7 @@ hm_lookup (Hashmap hm, Key key, Any *value)
 }
 
 
-/* update the value of a given key or create the binding if not exists */
+/* update key or create new binding if not exists */
 int
 hm_insert (Hashmap hm, Key key, Any value)
 {
@@ -350,7 +350,7 @@ hm_insert (Hashmap hm, Key key, Any value)
 }
 
 
-/* remove a binding from the hashmap */
+/* remove binding from hashmap */
 int
 hm_remove (Hashmap hm, Key key)
 {
@@ -404,7 +404,7 @@ hm_remove (Hashmap hm, Key key)
 }
 
 
-/* iterate the hashmap and call f for each key-value pair */
+/* iterate hashmap and call f for each key-value pair */
 int
 hm_iter (Hashmap hm, PFiter f)
 {
@@ -429,7 +429,7 @@ hm_iter (Hashmap hm, PFiter f)
 }
 
 
-/* retreive the current count of bindings from the hashmap */
+/* retreive current count of bindings from hashmap */
 int
 hm_count (Hashmap hm, size_t *count)
 {
