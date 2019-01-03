@@ -6,7 +6,7 @@ CC = gcc
 all: hashmap
 
 hashmap: hashmap.o
-	$(CC) $(LDFLAGS) -o libhashmap.so hashmap.o
+	$(CC) $(LDFLAGS) -o libhm.so hashmap.o
 
 hashmap.o: hashmap.c hashmap.h
 	$(CC) $(CFLAGS) hashmap.c
