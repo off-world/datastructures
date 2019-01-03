@@ -429,9 +429,9 @@ hm_iter (Hashmap hm, PFiter f)
 }
 
 
-/* get the current count of bindings from the hashmap */
-size_t
-hm_count (Hashmap hm)
+/* retreive the current count of bindings from the hashmap */
+int
+hm_count (Hashmap hm, size_t *count)
 {
 
     hashmap *map = hm;
@@ -439,7 +439,9 @@ hm_count (Hashmap hm)
     if (!map)
         return HM_INVALID;
 
-    return map != NULL ? map->load : 0;
+    *count = map->load;
+    
+    return HM_OK;
 
 }
 
