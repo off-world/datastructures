@@ -68,9 +68,9 @@ typedef struct {
 
 /* hashmap datastructure */
 typedef struct {
-    /* maximum count of bindings */
+    /* table size */
     size_t size;
-    /* current count of bindings */
+    /* binding count */
     size_t load;
     /* hashtable */
     binding *table;
