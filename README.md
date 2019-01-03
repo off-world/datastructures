@@ -13,7 +13,7 @@ ___
 
 ### Hashmap
 
-Implementation of an [open addressing](https://en.wikipedia.org/wiki/Open_addressing) hashmap using [linear probing](https://en.wikipedia.org/wiki/Linear_probing). The table size is ensured to stay prime even upon resize to prevent clustering.
+an [open addressing](https://en.wikipedia.org/wiki/Open_addressing) hashmap using [linear probing](https://en.wikipedia.org/wiki/Linear_probing). The table size is ensured to stay prime even upon resize to prevent clustering.
 
 #### Example
 
