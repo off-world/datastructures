@@ -4,10 +4,9 @@
 
 a collection of common datastructures written in C
 
-
 ## ToC
 
-1. [Hashmap](#hashmap)
+1.  [Hashmap](#hashmap)
 
 ___
 
@@ -17,13 +16,13 @@ ___
 
 #### Time Complexity
 
-|         |                                                                    |
-|---------|--------------------------------------------------------------------|
+|         |                                                                      |
+|---------|----------------------------------------------------------------------|
 | insert  | `O(1)` [amortized](https://en.wikipedia.org/wiki/Amortized_analysis) |
-| lookup  | `O(1)` |
-| remove  | `O(1)` |
-| count   | `O(1)` |
-| iterate | `O(n)` |
+| lookup  | `O(1)`                                                               |
+| remove  | `O(1)`                                                               |
+| count   | `O(1)`                                                               |
+| iterate | `O(n)`                                                               |
 
 #### Space Complexity
 
