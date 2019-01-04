@@ -224,7 +224,7 @@ hm_init (Hashmap *hm)
 
     if (!map->table) {
         // free previously allocated resources
-        hm_free (map);
+        free (map);
 
         return HM_OUT_OF_MEMORY;
     }
