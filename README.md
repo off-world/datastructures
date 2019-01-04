@@ -15,6 +15,22 @@ ___
 
 [open addressing](https://en.wikipedia.org/wiki/Open_addressing) hashmap using [linear probing](https://en.wikipedia.org/wiki/Linear_probing). table size is ensured to stay prime even upon resize to prevent clustering. default hash algorithm is [djb2](http://www.cse.yorku.ca/~oz/hash.html).
 
+#### Time Complexity
+
+|         |                                                                    |
+|---------|--------------------------------------------------------------------|
+| insert  | `O(1)` [amortized](https://en.wikipedia.org/wiki/Amortized_analysis) |
+| lookup  | `O(1)` |
+| remove  | `O(1)` |
+| count   | `O(1)` |
+| iterate | `O(n)` |
+
+#### Space Complexity
+
+`O(n)`
+
+space consumption depends heavily on growth rate and load factor threshold. A higher growth rate and smaller threshold result in higher memory usage but overall better performance due to smaller probability of hash collisions. By default growth rate is 2 and load factor threshold is 0.5 resulting in an average load between 0.25 and 0.5.
+
 #### Example
 
 ```C
