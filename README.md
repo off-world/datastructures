@@ -28,7 +28,7 @@ ___
 
 `O(n)`
 
-space consumption depends heavily on growth rate and load factor threshold. A higher growth rate and smaller threshold result in higher memory usage but overall better performance due to smaller probability of hash collisions. By default growth rate is 2 and load factor threshold is 0.5 resulting in an average load between 0.25 and 0.5.
+space consumption depends heavily on growth rate and load factor threshold. A higher growth rate and lower threshold result in higher memory usage but overall better performance due to smaller probability of hash collisions. By default growth rate is 2 and load factor threshold is 0.5 resulting in an average load between 0.25 and 0.5.
 
 #### Example
 
