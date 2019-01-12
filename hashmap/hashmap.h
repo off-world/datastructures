@@ -75,7 +75,7 @@ extern int hm_insert (Hashmap hm, Key key, Any value);
 extern int hm_remove (Hashmap hm, Key key);
 
 /* iterate hashmap and call f for each key-value pair */
-extern int hm_iter (Hashmap hm, PFiter f);
+extern int hm_foreach (Hashmap hm, PFiter f);
 
 /* retreive current count of bindings from hashmap*/
 extern int hm_count (Hashmap hm, size_t *count);
