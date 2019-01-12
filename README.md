@@ -54,8 +54,10 @@ main (int argc, char **argv)
     hm_insert (h, k, v);
     hm_lookup (h, k, &v);
     
-    hm_iter (h, hashmap_print);
+    hm_foreach (h, hashmap_print);
     
     hm_free (h);
+    
+    return 0;
 }
 ```
