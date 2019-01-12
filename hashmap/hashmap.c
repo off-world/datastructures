@@ -406,7 +406,7 @@ hm_remove (Hashmap hm, Key key)
 
 /* iterate hashmap and call f for each key-value pair */
 int
-hm_iter (Hashmap hm, PFiter f)
+hm_foreach (Hashmap hm, PFiter f)
 {
 
     size_t i;
