@@ -7,7 +7,7 @@ a collection of common datastructures written in C
 ## ToC
 
 1.  [Hashmap](#hashmap)
-2.  [List](#list)
+2.  [Linked List](#linked list)
 
 ___
 
@@ -63,7 +63,7 @@ main (int argc, char **argv)
 }
 ```
 
-### List
+### Linked List
 
 [XOR linked list](https://en.wikipedia.org/wiki/XOR_linked_list), a memory efficient implementation of a doubly linked list. Each node only stores one address field containing the bitwise XOR of the memory addresses from the previous and next node.
 
