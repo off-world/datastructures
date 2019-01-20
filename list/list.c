@@ -62,8 +62,6 @@ typedef struct {
 } list;
 
 
-/* prototypes */
-
 int ll_init (List *l);
 int ll_free (List l);
 int ll_first (List l, Any *element);
