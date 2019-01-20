@@ -15,7 +15,7 @@ ___
 
 [open addressing](https://en.wikipedia.org/wiki/Open_addressing) hashmap using [linear probing](https://en.wikipedia.org/wiki/Linear_probing). table size is ensured to stay prime even upon resize to prevent clustering. default hash algorithm is [djb2](http://www.cse.yorku.ca/~oz/hash.html).
 
-#### Time Complexity
+#### Time Complexity for Hashmap
 
 |         |                                                                      |
 |---------|----------------------------------------------------------------------|
@@ -25,13 +25,13 @@ ___
 | count   | `O(1)`                                                               |
 | foreach | `O(n)`                                                               |
 
-#### Space Complexity
+#### Space Complexity for Hashmap
 
 `O(n)`
 
 space consumption depends heavily on growth rate and load factor threshold. A higher growth rate and lower threshold result in higher memory usage but overall better performance due to smaller probability of hash collisions. By default growth rate is 2 and load factor threshold is 0.5 resulting in an average load between 0.25 and 0.5.
 
-#### Example
+#### Hashmap Example
 
 ```C
 #include <stdio.h>
@@ -67,7 +67,7 @@ main (int argc, char **argv)
 
 [XOR linked list](https://en.wikipedia.org/wiki/XOR_linked_list), a memory efficient implementation of a doubly linked list. Each node only stores one address field containing the bitwise XOR of the memory addresses from the previous and next node.
 
-#### Time Complexity
+#### Time Complexity for Linked List
 
 |         |        |
 |---------|--------|
@@ -84,11 +84,11 @@ main (int argc, char **argv)
 | len     | `O(1)` |
 | foreach | `O(n)` |
 
-#### Space Complexity
+#### Space Complexity for Linked List
 
 `O(n)`
 
-#### Example
+#### Linked List Example
 
 ```C
 #include <stdio.h>
