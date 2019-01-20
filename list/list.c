@@ -36,7 +36,6 @@
 
 #include "list.h"
 
-#include <stdio.h>
 
 #define XOR(A, B)   (node *)(((uintptr_t) A) ^ ((uintptr_t) B))
 
