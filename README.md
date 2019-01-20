@@ -88,7 +88,7 @@ main (int argc, char **argv)
 
 `O(n)`
 
-### Example
+#### Example
 
 ```C
 #include <stdio.h>
