@@ -78,13 +78,13 @@ typedef struct {
 } hashmap;
 
 
-int hm_init (Hashmap *hm);
-int hm_free (Hashmap hm);
-int hm_lookup (Hashmap hm, Key key, Any *value);
-int hm_insert (Hashmap hm, Key key, Any value);
-int hm_remove (Hashmap hm, Key key);
-int hm_foreach (Hashmap hm, PFIter f);
-int hm_count (Hashmap hm, size_t *count);
+int map_init (Hashmap *hm);
+int map_free (Hashmap hm);
+int map_lookup (Hashmap hm, Key key, Any *value);
+int map_insert (Hashmap hm, Key key, Any value);
+int map_remove (Hashmap hm, Key key);
+int map_foreach (Hashmap hm, PFIter f);
+int map_count (Hashmap hm, size_t *count);
 
 
 /* hashing algorithm */
@@ -147,14 +147,14 @@ find_slot (hashmap *map, Key key, size_t *index)
             // retreive index
             *index = idx;
 
-            return HM_OK;
+            return MAP_OK;
         }
 
         idx = (idx + LINEAR_PROBING_INTERVAL) % map->size;
 
     }
 
-    return HM_PROBING_FAILED;
+    return MAP_PROBING_FAILED;
 
 }
 
@@ -184,7 +184,7 @@ resize (hashmap *map)
         map->table = old_table;
         map->size = old_size;
 
-        return HM_OUT_OF_MEMORY;
+        return MAP_OUT_OF_MEMORY;
     }
 
     // rehash
@@ -203,7 +203,7 @@ resize (hashmap *map)
                 map->table = old_table;
                 map->size = old_size;
 
-                return HM_PROBING_FAILED;
+                return MAP_PROBING_FAILED;
             }
 
             // insert binding
@@ -214,20 +214,20 @@ resize (hashmap *map)
 
     free (old_table);
 
-    return HM_OK;
+    return MAP_OK;
 
 }
 
 
 /* initialize hashmap */
 int
-hm_init (Hashmap *hm)
+map_init (Hashmap *hm)
 {
 
     hashmap *map = malloc (sizeof (hashmap));
 
     if (!map)
-        return HM_OUT_OF_MEMORY;
+        return MAP_OUT_OF_MEMORY;
 
     map->table = calloc (INITIAL_SIZE,  sizeof (binding));
 
@@ -235,7 +235,7 @@ hm_init (Hashmap *hm)
         // free previously allocated resources
         free (map);
 
-        return HM_OUT_OF_MEMORY;
+        return MAP_OUT_OF_MEMORY;
     }
 
     map->size = INITIAL_SIZE;
@@ -243,32 +243,32 @@ hm_init (Hashmap *hm)
 
     *hm = map;
 
-    return HM_OK;
+    return MAP_OK;
 
 }
 
 
 /* delete hashmap */
 int
-hm_free (Hashmap hm)
+map_free (Hashmap hm)
 {
 
     hashmap *map = hm;
 
     if (!map)
-        return HM_INVALID;
+        return MAP_INVALID;
 
     free (map->table);
     free (map);
 
-    return HM_OK;
+    return MAP_OK;
 
 }
 
 
 /* retreive value of given key from hashmap */
 int
-hm_lookup (Hashmap hm, Key key, Any *value)
+map_lookup (Hashmap hm, Key key, Any *value)
 {
 
     size_t i, idx;
@@ -276,7 +276,7 @@ hm_lookup (Hashmap hm, Key key, Any *value)
     hashmap *map = hm;
 
     if (!map)
-        return HM_INVALID;
+        return MAP_INVALID;
 
     // get slot index for key
     idx = hash (key) % map->size;
@@ -293,7 +293,7 @@ hm_lookup (Hashmap hm, Key key, Any *value)
             // retreive value
             *value = map->table[idx].value;
 
-            return HM_OK;
+            return MAP_OK;
         }
 
         idx = (idx + LINEAR_PROBING_INTERVAL) % map->size;
@@ -301,14 +301,14 @@ hm_lookup (Hashmap hm, Key key, Any *value)
 
     *value = NULL;
 
-    return HM_KEY_NOT_FOUND;
+    return MAP_KEY_NOT_FOUND;
 
 }
 
 
 /* update key or create new binding if not exists */
 int
-hm_insert (Hashmap hm, Key key, Any value)
+map_insert (Hashmap hm, Key key, Any value)
 {
 
     int ret;
@@ -318,7 +318,7 @@ hm_insert (Hashmap hm, Key key, Any value)
     hashmap *map = hm;
 
     if (!map)
-        return HM_INVALID;
+        return MAP_INVALID;
 
     // load factor exceeds threshold
     if ((float) map->load / (float) map->size >= LOAD_FACTOR_THRESHOLD) {
@@ -345,7 +345,7 @@ hm_insert (Hashmap hm, Key key, Any value)
 
         // give up if again no slot was found
         if (!ret)
-            return HM_PROBING_FAILED;
+            return MAP_PROBING_FAILED;
     }
 
     // insert binding
@@ -354,14 +354,14 @@ hm_insert (Hashmap hm, Key key, Any value)
 
     ++map->load;
 
-    return HM_OK;
+    return MAP_OK;
 
 }
 
 
 /* remove binding from hashmap */
 int
-hm_remove (Hashmap hm, Key key)
+map_remove (Hashmap hm, Key key)
 {
 
     size_t i, idx, removed_idx, last_idx;
@@ -369,7 +369,7 @@ hm_remove (Hashmap hm, Key key)
     hashmap *map = hm;
 
     if (!map)
-        return HM_INVALID;
+        return MAP_INVALID;
 
     // get slot index for key
     idx = hash (key) % map->size;
@@ -379,7 +379,7 @@ hm_remove (Hashmap hm, Key key)
 
         // slot at index has no binding
         if (!map->table[idx].key)
-            return HM_KEY_NOT_FOUND;
+            return MAP_KEY_NOT_FOUND;
 
         // slot at index has binding and keys match
         if (strcmp (map->table[idx].key, key) == 0) {
@@ -402,20 +402,20 @@ hm_remove (Hashmap hm, Key key)
 
             --map->load;
 
-            return HM_OK;
+            return MAP_OK;
         }
 
         idx = (idx + LINEAR_PROBING_INTERVAL) % map->size;
 
     }
 
-    return HM_PROBING_FAILED;
+    return MAP_PROBING_FAILED;
 }
 
 
 /* iterate hashmap and call f for each key-value pair */
 int
-hm_foreach (Hashmap hm, PFIter f)
+map_foreach (Hashmap hm, PFIter f)
 {
 
     size_t i;
@@ -423,7 +423,7 @@ hm_foreach (Hashmap hm, PFIter f)
     hashmap *map = hm;
 
     if (!map)
-        return HM_INVALID;
+        return MAP_INVALID;
 
     // iterate table
     for (i = 0; i < map->size; ++i) {
@@ -433,24 +433,24 @@ hm_foreach (Hashmap hm, PFIter f)
 
     }
 
-    return HM_OK;
+    return MAP_OK;
 
 }
 
 
 /* retreive current count of bindings from hashmap */
 int
-hm_count (Hashmap hm, size_t *count)
+map_count (Hashmap hm, size_t *count)
 {
 
     hashmap *map = hm;
 
     if (!map)
-        return HM_INVALID;
+        return MAP_INVALID;
 
     *count = map->load;
-    
-    return HM_OK;
+
+    return MAP_OK;
 
 }
 

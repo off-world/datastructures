@@ -1,5 +1,5 @@
 /**
- * hashmap.h
+ * stack.h
  *
  * Copyright (c) 2019, Tobias Heilig
  * All rights reserved.
@@ -9,9 +9,9 @@
  * are met:
  *
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
+ *    notice, this stack of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
+ *    notice, this stack of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  * 3. The name of the authors may not be used to endorse or promote products
  *    derived from this software without specific prior written permission.
@@ -30,53 +30,45 @@
  **/
 
 
+#include <stddef.h>
+
+
 /* ok */
-#define MAP_OK                1
+#define STACK_OK                    1
 
-/* invalid or uninitialized hashmap */
-#define MAP_INVALID           0
+/* invalid or uninitialized stack */
+#define STACK_INVALID               0
 
-/* no binding for key */
-#define MAP_KEY_NOT_FOUND    -1
+/* empty stack */
+#define STACK_EMPTY                -1
 
 /* out of memory */
-#define MAP_OUT_OF_MEMORY    -2
-
-/* cannot find slot */
-#define MAP_PROBING_FAILED   -3
+#define STACK_OUT_OF_MEMORY        -2
 
 
-/* pointer to the internally managed hashmap datastructure */
-typedef void *Hashmap;
+/* pointer to the internally managed stack datastructure */
+typedef void *Stack;
 
-/* key type */
-typedef char *Key;
-
-/* value type */
+/* element type */
 typedef void *Any;
 
-/* iteration callback */
-typedef void (*PFIter) (Key, Any);
 
+/* initialize stack */
+extern int stack_init (Stack *s);
 
-/* initialize hashmap */
-extern int map_init (Hashmap *hm);
+/* delete stack */
+extern int stack_free (Stack s);
 
-/* delete hashmap */
-extern int map_free (Hashmap hm);
+/* retreive topmost element from stack */
+extern int stack_peek (Stack s, Any *element);
 
-/* retreive value from hashmap */
-extern int map_lookup (Hashmap hm, Key key, Any *value);
+/* pop element from stack */
+extern int stack_pop (Stack s, Any *element);
 
-/* update key or create new binding if not exists */
-extern int map_insert (Hashmap hm, Key key, Any value);
+/* push element onto stack */
+extern int stack_push (Stack s, Any element);
 
-/* remove binding from hashmap */
-extern int map_remove (Hashmap hm, Key key);
+/* retreive size of stack */
+extern int stack_size (Stack s, size_t *size);
 
-/* iterate hashmap and call f for each key-value pair */
-extern int map_foreach (Hashmap hm, PFIter f);
-
-/* retreive current count of bindings from hashmap*/
-extern int map_count (Hashmap hm, size_t *count);
 

@@ -3,13 +3,13 @@ LDFLAGS = -shared
 CC = gcc
 
 .PHONY: all
-all: list
+all: stack
 
-list: list.o
-	$(CC) $(LDFLAGS) -o liblist.so list.o
+stack: stack.o
+	$(CC) $(LDFLAGS) -o libstack.so stack.o
 
-list.o: list.c list.h
-	$(CC) $(CFLAGS) list.c
+stack.o: stack.c stack.h
+	$(CC) $(CFLAGS) stack.c
 
 .PHONY: clean
 clean:

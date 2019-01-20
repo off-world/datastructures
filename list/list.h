@@ -34,19 +34,19 @@
 
 
 /* ok */
-#define LL_OK                    1
+#define LIST_OK                    1
 
 /* invalid or uninitialized list */
-#define LL_INVALID               0
+#define LIST_INVALID               0
 
 /* empty list */
-#define LL_EMPTY                -1
+#define LIST_EMPTY                -1
 
 /* index out of list range */
-#define LL_INDEX_OUT_OF_RANGE   -2
+#define LIST_INDEX_OUT_OF_RANGE   -2
 
 /* out of memory */
-#define LL_OUT_OF_MEMORY        -3
+#define LIST_OUT_OF_MEMORY        -3
 
 
 /* pointer to the internally managed list datastructure */
@@ -60,45 +60,45 @@ typedef void (*PFIter) (Any);
 
 
 /* initialize list */
-extern int ll_init (List *l);
+extern int list_init (List *l);
 
 /* delete list */
-extern int ll_free (List l);
+extern int list_free (List l);
 
 /* retreive first element from list */
-extern int ll_first (List l, Any *element);
+extern int list_first (List l, Any *element);
 
 /* retreive last element from list */
-extern int ll_last (List l, Any *element);
+extern int list_last (List l, Any *element);
 
 /* retreive and remove first element from list */
-extern int ll_lpop (List l, Any *element);
+extern int list_lpop (List l, Any *element);
 
 /* retreive and remove last element from list */
-extern int ll_rpop (List l, Any *element);
+extern int list_rpop (List l, Any *element);
 
 /* prepend element to list */
-extern int ll_lpush (List l, Any element);
+extern int list_lpush (List l, Any element);
 
 /* append element to list */
-extern int ll_rpush (List l, Any element);
+extern int list_rpush (List l, Any element);
 
 /* retreive element at index from list */
-extern int ll_at (List  l, size_t index, Any *element);
+extern int list_at (List  l, size_t index, Any *element);
 
 /* retreive and remove element at index from list */
-extern int ll_pop_at (List  l, size_t index, Any *element);
+extern int list_pop_at (List  l, size_t index, Any *element);
 
 /* insert element at index from list */
-extern int ll_push_at (List  l, size_t index, Any element);
+extern int list_push_at (List  l, size_t index, Any element);
 
 /* reverse list */
-extern int ll_reverse (List l);
+extern int list_reverse (List l);
 
 /* iterate list and call f for each element */
-extern int ll_foreach (List l, PFIter f);
+extern int list_foreach (List l, PFIter f);
 
 /* retreive length of list */
-extern int ll_len (List l, size_t *len);
+extern int list_len (List l, size_t *len);
 
 
