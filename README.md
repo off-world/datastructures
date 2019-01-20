@@ -7,7 +7,7 @@ a collection of common datastructures written in C
 ## ToC
 
 1.  [Hashmap](#hashmap)
-2.  [Linked List](#linked list)
+2.  [Linked List](#linked-list)
 
 ___
 
