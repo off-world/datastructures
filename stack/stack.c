@@ -1,7 +1,7 @@
 /**
  * stack.c
  *
- * implementation of a stack datastructure.
+ * implementation of a simple stack.
  *
  * Copyright (c) 2019, Tobias Heilig
  * All rights reserved.
