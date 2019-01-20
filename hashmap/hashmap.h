@@ -80,4 +80,3 @@ extern int map_foreach (Hashmap hm, PFIter f);
 /* retreive current count of bindings from hashmap*/
 extern int map_count (Hashmap hm, size_t *count);
 
-
