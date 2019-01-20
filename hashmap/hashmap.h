@@ -56,7 +56,7 @@ typedef char *Key;
 typedef void *Any;
 
 /* iteration callback */
-typedef void (*PFiter) (Key, Any);
+typedef void (*PFIter) (Key, Any);
 
 
 /* initialize hashmap */
@@ -75,7 +75,7 @@ extern int hm_insert (Hashmap hm, Key key, Any value);
 extern int hm_remove (Hashmap hm, Key key);
 
 /* iterate hashmap and call f for each key-value pair */
-extern int hm_foreach (Hashmap hm, PFiter f);
+extern int hm_foreach (Hashmap hm, PFIter f);
 
 /* retreive current count of bindings from hashmap*/
 extern int hm_count (Hashmap hm, size_t *count);
