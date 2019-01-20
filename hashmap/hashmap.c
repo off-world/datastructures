@@ -78,6 +78,15 @@ typedef struct {
 } hashmap;
 
 
+int hm_init (Hashmap *hm);
+int hm_free (Hashmap hm);
+int hm_lookup (Hashmap hm, Key key, Any *value);
+int hm_insert (Hashmap hm, Key key, Any value);
+int hm_remove (Hashmap hm, Key key);
+int hm_foreach (Hashmap hm, PFIter f);
+int hm_count (Hashmap hm, size_t *count);
+
+
 /* hashing algorithm */
 static inline unsigned int
 hash (Key k)
