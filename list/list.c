@@ -149,7 +149,7 @@ ll_first (List l, Any *element)
         return LL_EMPTY;
     }
 
-    // retreive element from first node
+    // retreive element
     *element = lst->head->element;
 
     return LL_OK;
@@ -193,22 +193,25 @@ ll_lpop (List l, Any *element)
 
     int ret;
     node *tmp;
-
+    
     list *lst = l;
 
-    if (!lst)
+    if (!lst) {
+        // cannot retreive element
+        *element = NULL;
+
         return LL_INVALID;
-
-    if (!lst->head)
-        return LL_EMPTY;
-
-    // get first element
-    if (element) {
-        ret = ll_first (l, element);
-
-        if (!ret)
-            return ret;
     }
+
+    if (!lst->head) {
+        // cannot retreive element
+        *element = NULL;
+
+        return LL_EMPTY;
+    }
+
+    // retreive element
+    *element = lst->head->element;
 
     // update head
     tmp = lst->head;
@@ -244,19 +247,22 @@ ll_rpop (List l, Any *element)
 
     list *lst = l;
 
-    if (!lst)
+    if (!lst) {
+        // cannot retreive element
+        *element = NULL;
+
         return LL_INVALID;
-
-    if (!lst->head)
-        return LL_EMPTY;
-
-    // get last element
-    if (element) {
-        ret = ll_last (l, element);
-
-        if (!ret)
-            return ret;
     }
+
+    if (!lst->tail) {
+        // cannot retreive element
+        *element = NULL;
+
+        return LL_EMPTY;
+    }
+
+    // retreive element
+    *element = lst->tail->element;
 
     // update tail
     tmp = lst->tail;
