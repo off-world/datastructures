@@ -83,10 +83,14 @@ int
 ll_init (List *l)
 {
 
-    list *lst = calloc (1, sizeof (list));
+    list *lst = malloc (sizeof (list));
 
     if (!lst)
         return LL_OUT_OF_MEMORY;
+
+    lst->len = 0;
+    lst->head = NULL;
+    lst->tail = NULL;
 
     *l = lst;
 
