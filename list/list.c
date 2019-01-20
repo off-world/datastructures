@@ -659,4 +659,3 @@ list_len (List l, size_t *len)
 
 }
 
-
