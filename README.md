@@ -51,14 +51,14 @@ main (int argc, char **argv)
     Key k = "key";
     Any v = "val";
     
-    hm_init (&h);
+    map_init (&h);
     
-    hm_insert (h, k, v);
-    hm_lookup (h, k, &v);
+    map_insert (h, k, v);
+    map_lookup (h, k, &v);
     
-    hm_foreach (h, hashmap_print);
+    map_foreach (h, hashmap_print);
     
-    hm_free (h);
+    map_free (h);
     
     return 0;
 }
@@ -107,24 +107,24 @@ main (int argc, char **argv)
     
     Any element;
     
-    ll_init (&l);
+    list_init (&l);
     
-    ll_lpush (l, "b");
-    ll_lpush (l, "a");
-    ll_rpush (l, "d");
-    ll_push_at (l, 2, "c");
+    list_lpush (l, "b");
+    list_lpush (l, "a");
+    list_rpush (l, "d");
+    list_push_at (l, 2, "c");
     
-    ll_reverse (l);
+    list_reverse (l);
     
-    ll_first (l, &element);
+    list_first (l, &element);
     
-    ll_rpop (l, NULL);
-    ll_pop_at (l, 1, &element);
-    ll_lpop (l, &element);
+    list_rpop (l, NULL);
+    list_pop_at (l, 1, &element);
+    list_lpop (l, &element);
     
-    ll_foreach (l, list_print);
+    list_foreach (l, list_print);
     
-    ll_free (l);
+    list_free (l);
     
     return 0;
 }
