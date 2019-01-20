@@ -198,20 +198,23 @@ ll_lpop (List l, Any *element)
 
     if (!lst) {
         // cannot retreive element
-        *element = NULL;
+        if (element)
+            *element = NULL;
 
         return LL_INVALID;
     }
 
     if (!lst->head) {
         // cannot retreive element
-        *element = NULL;
+        if (element)
+            *element = NULL;
 
         return LL_EMPTY;
     }
 
     // retreive element
-    *element = lst->head->element;
+    if (element)
+        *element = lst->head->element;
 
     // update head
     tmp = lst->head;
@@ -249,20 +252,23 @@ ll_rpop (List l, Any *element)
 
     if (!lst) {
         // cannot retreive element
-        *element = NULL;
+        if (element)
+            *element = NULL;
 
         return LL_INVALID;
     }
 
     if (!lst->tail) {
         // cannot retreive element
-        *element = NULL;
+        if (element)
+            *element = NULL;
 
         return LL_EMPTY;
     }
 
     // retreive element
-    *element = lst->tail->element;
+    if (element)
+        *element = lst->tail->element;
 
     // update tail
     tmp = lst->tail;
