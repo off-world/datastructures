@@ -117,7 +117,8 @@ main (int argc, char **argv)
     
     ll_first (l, &v);
     
-    ll_pop_at (l, 2, &v);
+    ll_rpop (l, NULL);
+    ll_pop_at (l, 1, &v);
     ll_lpop (l, &v);
     
     ll_foreach (l, list_print);
