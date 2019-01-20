@@ -8,6 +8,7 @@ a collection of common datastructures written in C
 
 1.  [Hashmap](#hashmap)
 2.  [Linked List](#linked-list)
+3.  [Stack](#stack)
 
 ___
 
@@ -15,7 +16,7 @@ ___
 
 [open addressing](https://en.wikipedia.org/wiki/Open_addressing) hashmap using [linear probing](https://en.wikipedia.org/wiki/Linear_probing). table size is ensured to stay prime even upon resize to prevent clustering. default hash algorithm is [djb2](http://www.cse.yorku.ca/~oz/hash.html).
 
-#### Time Complexity for Hashmap
+#### Time Complexity of Hashmap Operations
 
 |         |                                                                      |
 |---------|----------------------------------------------------------------------|
@@ -67,7 +68,7 @@ main (int argc, char **argv)
 
 [XOR linked list](https://en.wikipedia.org/wiki/XOR_linked_list), a memory efficient implementation of a doubly linked list. Each node only stores one address field containing the bitwise XOR of the memory addresses from the previous and next node.
 
-#### Time Complexity for Linked List
+#### Time Complexity of Linked List Operations
 
 |         |        |
 |---------|--------|
@@ -104,7 +105,7 @@ main (int argc, char **argv)
 {
     List l;
     
-    Any v;
+    Any element;
     
     ll_init (&l);
     
@@ -115,15 +116,64 @@ main (int argc, char **argv)
     
     ll_reverse (l);
     
-    ll_first (l, &v);
+    ll_first (l, &element);
     
     ll_rpop (l, NULL);
-    ll_pop_at (l, 1, &v);
-    ll_lpop (l, &v);
+    ll_pop_at (l, 1, &element);
+    ll_lpop (l, &element);
     
     ll_foreach (l, list_print);
     
     ll_free (l);
+    
+    return 0;
+}
+```
+
+### Stack
+
+Simple [Stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)).
+
+#### Time Complexity of Stack Operations
+
+|       |        |
+|-------|--------|
+| peek  | `O(1)` |
+| pop   | `O(1)` |
+| push  | `O(1)` |
+| size  | `O(1)` |
+
+#### Space Complexity for Stack
+
+`O(n)`
+
+#### Stack Example
+
+```C
+#include <stdio.h>
+
+#include "stack.h"
+
+
+int
+main (int argc, char **argv)
+{
+    Stack s;
+    
+    Any element;
+    
+    stack_init (&s);
+    
+    stack_push (s, "a");
+    stack_push (s, "b");
+    stack_push (s, "c");
+    
+    stack_peek (s, &element);
+    
+    stack_pop (s, NULL);
+    stack_pop (s, &element);
+    
+    stack_free (s);
     
     return 0;
 }
