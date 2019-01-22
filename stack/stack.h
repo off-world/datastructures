@@ -78,18 +78,18 @@ extern int stack_push (Stack s, const Any element);
 extern int stack_size (const Stack s, size_t *size);
 
 /* initialize stack iterator */
-int stack_iter_init (Iterator *it, const Stack s);
+extern int stack_iter_init (Iterator *it, const Stack s);
 
 /* delete stack iterator */
-int stack_iter_free (Iterator it);
+extern int stack_iter_free (Iterator it);
 
 /* test for next element in stack iterator */
-int stack_iter_has_next (const Iterator it);
+extern int stack_iter_has_next (const Iterator it);
 
 /* retreive next element from stack iterator */
-int stack_iter_next (Iterator it, Any *element);
+extern int stack_iter_next (Iterator it, Any *element);
 
 /* reset stack iterator */
-int stack_iter_reset (Iterator it, const Stack s);
+extern int stack_iter_reset (Iterator it, const Stack s);
 
 
