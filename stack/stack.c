@@ -55,12 +55,12 @@ typedef struct {
 } stack;
 
 
-int stack_init (Stack *s);
-int stack_free (Stack s);
-int stack_peek (Stack s, Any *element);
-int stack_pop (Stack s, Any *element);
-int stack_push (Stack s, Any element);
-int stack_size (Stack s, size_t *len);
+typedef struct {
+    /* address of next stack node */
+    stack_node *next;
+
+} stack_iterator;
+
 
 
 /* initialize stack */
@@ -112,7 +112,7 @@ stack_free (Stack s)
 
 /* retreive topmost element from stack */
 int
-stack_peek (Stack s, Any *element)
+stack_peek (const Stack s, Any *element)
 {
 
     stack *stack = s;
@@ -183,7 +183,7 @@ stack_pop (Stack s, Any *element)
 
 /* push element onto stack */
 int
-stack_push (Stack s, Any element)
+stack_push (Stack s, const Any element)
 {
 
     stack_node *new_node;
@@ -213,7 +213,7 @@ stack_push (Stack s, Any element)
 
 /* retreive size of stack */
 int
-stack_size (Stack s, size_t *size)
+stack_size (const Stack s, size_t *size)
 {
 
     stack *stack = s;
@@ -222,6 +222,113 @@ stack_size (Stack s, size_t *size)
         return STACK_INVALID;
 
     *size = stack->size;
+
+    return STACK_OK;
+
+}
+
+
+/* initialize stack iterator */
+int
+stack_iter_init (Iterator *it, const Stack s)
+{
+
+    stack_iterator *iter;
+
+    stack *stack = s;
+
+    if (!stack)
+        return STACK_INVALID;
+
+    iter = malloc (sizeof (stack_iterator));
+
+    if (!iter)
+        return STACK_OUT_OF_MEMORY;
+
+    iter->next = stack->top;
+
+    *it = iter;
+
+    return STACK_OK;
+
+}
+
+/* delete stack iterator */
+int
+stack_iter_free (Iterator it)
+{
+
+    stack_iterator *iter = it;
+
+    if (!iter)
+        return STACK_INVALID;
+
+    free (iter);
+
+    return STACK_OK;
+
+}
+
+
+/* test for next element in stack iterator */
+int
+stack_iter_has_next (const Iterator it)
+{
+
+    stack_iterator *iter = it;
+
+    if (!iter)
+        return STACK_INVALID;
+
+    if (!iter->next)
+        return STACK_ITERATOR_EXHAUSTED;
+
+    return STACK_OK;
+
+}
+
+
+/* retreive next element from stack iterator */
+int
+stack_iter_next (Iterator it, Any *element)
+{
+
+    stack_iterator *iter = it;
+
+    if (!iter)
+        return STACK_INVALID;
+
+    if (!iter->next) {
+        // no next element
+        *element = NULL;
+
+        return STACK_ITERATOR_EXHAUSTED;
+    }
+
+    // retreive element
+    *element = iter->next->element;
+
+    // increment iterator
+    iter->next = iter->next->next;
+
+    return STACK_OK;
+
+}
+
+
+/* reset stack iterator */
+int
+stack_iter_reset (Iterator it, const Stack s)
+{
+
+    stack *stack = s;
+    stack_iterator *iter = it;
+
+    if (!stack || !iter)
+        return STACK_INVALID;
+
+    // reset stack iterator
+    iter->next = stack->top;
 
     return STACK_OK;
 

@@ -45,9 +45,15 @@
 /* out of memory */
 #define STACK_OUT_OF_MEMORY        -2
 
+/* stack iterator exhausted */
+#define STACK_ITERATOR_EXHAUSTED    0
+
 
 /* pointer to the internally managed stack datastructure */
 typedef void *Stack;
+
+/* pointer to the internally managed stack iterator */
+typedef void *Iterator;
 
 /* element type */
 typedef void *Any;
@@ -60,15 +66,30 @@ extern int stack_init (Stack *s);
 extern int stack_free (Stack s);
 
 /* retreive topmost element from stack */
-extern int stack_peek (Stack s, Any *element);
+extern int stack_peek (const Stack s, Any *element);
 
 /* pop element from stack */
 extern int stack_pop (Stack s, Any *element);
 
 /* push element onto stack */
-extern int stack_push (Stack s, Any element);
+extern int stack_push (Stack s, const Any element);
 
 /* retreive size of stack */
-extern int stack_size (Stack s, size_t *size);
+extern int stack_size (const Stack s, size_t *size);
+
+/* initialize stack iterator */
+int stack_iter_init (Iterator *it, const Stack s);
+
+/* delete stack iterator */
+int stack_iter_free (Iterator it);
+
+/* test for next element in stack iterator */
+int stack_iter_has_next (const Iterator it);
+
+/* retreive next element from stack iterator */
+int stack_iter_next (Iterator it, Any *element);
+
+/* reset stack iterator */
+int stack_iter_reset (Iterator it, const Stack s);
 
 
