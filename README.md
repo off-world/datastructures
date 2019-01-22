@@ -24,7 +24,7 @@ ___
 | lookup  | `O(1)`                                                               |
 | remove  | `O(1)`                                                               |
 | count   | `O(1)`                                                               |
-| foreach | `O(n)`                                                               |
+| iterate | `O(n)`                                                               |
 
 #### Space Complexity for Hashmap
 
@@ -83,7 +83,7 @@ main (void)
 | push_at | `O(n)` |
 | reverse | `O(1)` |
 | len     | `O(1)` |
-| foreach | `O(n)` |
+| iterate | `O(n)` |
 
 #### Space Complexity for Linked List
 
@@ -136,12 +136,13 @@ Simple [Stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)).
 
 #### Time Complexity of Stack Operations
 
-|       |        |
-|-------|--------|
-| peek  | `O(1)` |
-| pop   | `O(1)` |
-| push  | `O(1)` |
-| size  | `O(1)` |
+|         |        |
+|-------  |--------|
+| peek    | `O(1)` |
+| pop     | `O(1)` |
+| push    | `O(1)` |
+| size    | `O(1)` |
+| iterate | `O(n)` |
 
 #### Space Complexity for Stack
 
@@ -159,6 +160,7 @@ int
 main (void)
 {
     Stack s;
+    Iterator it;
     
     Any element;
     
@@ -168,11 +170,19 @@ main (void)
     stack_push (s, "b");
     stack_push (s, "c");
     
+    stack_iter_init (&it, s);
+    
+    while (stack_iter_has_next (it)) {
+        stack_iter_next (it, &e);
+        printf ("%s\n", (char*)e);
+    }
+    
     stack_peek (s, &element);
     
     stack_pop (s, NULL);
     stack_pop (s, &element);
     
+    stack_iter_free (it);
     stack_free (s);
     
     return 0;
