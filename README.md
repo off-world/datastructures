@@ -44,7 +44,7 @@ static void hashmap_print (Key key, Any value) {
 }
 
 int
-main (int argc, char **argv)
+main (void)
 {
     Hashmap h;
     
@@ -101,7 +101,7 @@ static void list_print (Any value) {
 }
 
 int
-main (int argc, char **argv)
+main (void)
 {
     List l;
     
@@ -156,7 +156,7 @@ Simple [Stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)).
 
 
 int
-main (int argc, char **argv)
+main (void)
 {
     Stack s;
     
