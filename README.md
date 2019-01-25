@@ -104,6 +104,7 @@ int
 main (void)
 {
     List l;
+    Iterator it;
     
     Any element;
     
@@ -118,12 +119,18 @@ main (void)
     
     list_first (l, &element);
     
+    list_iter_init (&it, l);
+    
+    while (list_iter_has_next (it)) {
+        list_iter_next (it, &element);
+        printf ("%s\n", (char*)element);
+    }
+    
     list_rpop (l, NULL);
     list_pop_at (l, 1, &element);
     list_lpop (l, &element);
     
-    list_foreach (l, list_print);
-    
+    list_iter_free (it);
     list_free (l);
     
     return 0;
@@ -173,8 +180,8 @@ main (void)
     stack_iter_init (&it, s);
     
     while (stack_iter_has_next (it)) {
-        stack_iter_next (it, &e);
-        printf ("%s\n", (char*)e);
+        stack_iter_next (it, &element);
+        printf ("%s\n", (char*)element);
     }
     
     stack_peek (s, &element);
