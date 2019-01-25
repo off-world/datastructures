@@ -81,10 +81,10 @@ extern int list_lpop (List l, Any *element);
 extern int list_rpop (List l, Any *element);
 
 /* prepend element to list */
-extern int list_lpush (List l, Any element);
+extern int list_lpush (List l, const Any element);
 
 /* append element to list */
-extern int list_rpush (List l, Any element);
+extern int list_rpush (List l, const Any element);
 
 /* retreive element at index from list */
 extern int list_at (const List l, size_t index, Any *element);
