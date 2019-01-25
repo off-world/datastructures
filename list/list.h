@@ -48,6 +48,9 @@
 /* out of memory */
 #define LIST_OUT_OF_MEMORY        -3
 
+/* list iterator exhausted */
+#define LIST_ITERATOR_EXHAUSTED    0
+
 
 /* pointer to the internally managed list datastructure */
 typedef void *List;
@@ -55,8 +58,8 @@ typedef void *List;
 /* element type */
 typedef void *Any;
 
-/* iteration callback */
-typedef void (*PFIter) (Any);
+/* pointer to the internally managed list iterator */
+typedef void *Iterator;
 
 
 /* initialize list */
@@ -66,10 +69,10 @@ extern int list_init (List *l);
 extern int list_free (List l);
 
 /* retreive first element from list */
-extern int list_first (List l, Any *element);
+extern int list_first (const List l, Any *element);
 
 /* retreive last element from list */
-extern int list_last (List l, Any *element);
+extern int list_last (const List l, Any *element);
 
 /* retreive and remove first element from list */
 extern int list_lpop (List l, Any *element);
@@ -84,20 +87,33 @@ extern int list_lpush (List l, Any element);
 extern int list_rpush (List l, Any element);
 
 /* retreive element at index from list */
-extern int list_at (List  l, size_t index, Any *element);
+extern int list_at (const List l, size_t index, Any *element);
 
 /* retreive and remove element at index from list */
-extern int list_pop_at (List  l, size_t index, Any *element);
+extern int list_pop_at (List l, size_t index, Any *element);
 
 /* insert element at index from list */
-extern int list_push_at (List  l, size_t index, Any element);
+extern int list_push_at (List l, size_t index, const Any element);
 
 /* reverse list */
 extern int list_reverse (List l);
 
-/* iterate list and call f for each element */
-extern int list_foreach (List l, PFIter f);
-
 /* retreive length of list */
-extern int list_len (List l, size_t *len);
+extern int list_len (const List l, size_t *len);
+
+/* initialize list iterator */
+extern int list_iter_init (Iterator *it, const List l);
+
+/* delete list iterator */
+extern int list_iter_free (Iterator it);
+
+/* test for next element in list iterator */
+extern int list_iter_has_next (const Iterator it);
+
+/* retreive next element from list iterator */
+extern int list_iter_next (Iterator it, Any *element);
+
+/* reset list iterator */
+extern int list_iter_reset (Iterator it, const List l);
+
 

@@ -62,20 +62,14 @@ typedef struct {
 } list;
 
 
-int list_init (List *l);
-int list_free (List l);
-int list_first (List l, Any *element);
-int list_last (List l, Any *element);
-int list_lpop (List l, Any *element);
-int list_rpop (List l, Any *element);
-int list_lpush (List l, Any element);
-int list_rpush (List l, Any element);
-int list_at (List l, size_t index, Any *element);
-int list_pop_at (List l, size_t index, Any *element);
-int list_push_at (List l, size_t index, Any element);
-int list_reverse (List l);
-int list_foreach (List l, PFIter f);
-int list_len (List l, size_t *len);
+typedef struct {
+    /* address of previous list node */
+    list_node *prev;
+    /* address of next list node */
+    list_node *next;
+
+} list_iterator;
+
 
 
 /* initialize list */
@@ -134,7 +128,7 @@ list_free (List l)
 
 /* retreive first element from list */
 int
-list_first (List l, Any *element)
+list_first (const List l, Any *element)
 {
 
     list *list = l;
@@ -163,7 +157,7 @@ list_first (List l, Any *element)
 
 /* retreive last element from list */
 int
-list_last (List l, Any *element)
+list_last (const List l, Any *element)
 {
 
     list *list = l;
@@ -295,10 +289,9 @@ list_rpop (List l, Any *element)
 
 }
 
-
 /* prepend element to list */
 int
-list_lpush (List l, Any element)
+list_lpush (List l, const Any element)
 {
     list_node *new_list_node;
 
@@ -338,7 +331,7 @@ list_lpush (List l, Any element)
 
 /* append element to list */
 int
-list_rpush (List l, Any element)
+list_rpush (List l, const Any element)
 {
 
     list *list = l;
@@ -377,7 +370,7 @@ list_rpush (List l, Any element)
 
 /* retreive element at index from list */
 int
-list_at (List l, size_t index, Any *element)
+list_at (const List l, size_t index, Any *element)
 {
 
     int i, rev;
@@ -513,7 +506,7 @@ list_pop_at (List l, size_t index, Any *element)
 
 /* insert element at index from list */
 int
-list_push_at (List l, size_t index, Any element)
+list_push_at (List l, size_t index, const Any element)
 {
 
     int i, rev;
@@ -608,44 +601,9 @@ list_reverse (List l)
 }
 
 
-/* iterate list and call f for each element */
-int
-list_foreach (List l, PFIter f)
-{
-
-    list_node *prev;
-    list_node *cur;
-    list_node *next;
-
-    list *list = l;
-
-    if (!list)
-        return LIST_INVALID;
-
-    if (!list->len)
-        return LIST_EMPTY;
-
-    prev = NULL;
-    cur = list->head;
-
-    while (cur) {
-        next = XOR (prev, cur->link);
-
-        // call f for each element
-        (*f) (cur->element);
-
-        prev = cur;
-        cur = next;
-    }
-
-    return LIST_OK;
-
-}
-
-
 /* retreive length of list */
 int
-list_len (List l, size_t *len)
+list_len (const List l, size_t *len)
 {
 
     list *list = l;
@@ -658,4 +616,119 @@ list_len (List l, size_t *len)
     return LIST_OK;
 
 }
+
+
+/* initialize list iterator */
+int
+list_iter_init (Iterator *it, const List l)
+{
+
+    list_iterator *iter;
+
+    list *list = l;
+
+    if (!list)
+        return LIST_INVALID;
+
+    iter = malloc (sizeof (list_iterator));
+
+    if (!iter)
+        return LIST_OUT_OF_MEMORY;
+
+    iter->prev = NULL;
+    iter->next = list->head;
+
+    *it = iter;
+
+    return LIST_OK;
+
+}
+
+
+/* delete list iterator */
+int
+list_iter_free (Iterator it)
+{
+
+    list_iterator *iter = it;
+
+    if (!iter)
+        return LIST_INVALID;
+
+    free (iter);
+
+    return LIST_OK;
+
+}
+
+
+/* test for next element in list iterator */
+int
+list_iter_has_next (const Iterator it)
+{
+
+    list_iterator *iter = it;
+
+    if (!iter)
+        return LIST_INVALID;
+
+    if (!iter->next)
+        return LIST_ITERATOR_EXHAUSTED;
+
+    return LIST_OK;
+
+}
+
+
+/* retreive next element from list iterator */
+int
+list_iter_next (Iterator it, Any *element)
+{
+
+    list_node *next;
+
+    list_iterator *iter = it;
+
+    if (!iter)
+        return LIST_INVALID;
+
+    if (!iter->next) {
+        // no next element
+        *element = NULL;
+
+        return LIST_ITERATOR_EXHAUSTED;
+    }
+
+    // retreive element
+    *element = iter->next->element;
+
+    // increment iterator
+    next = XOR (iter->prev, iter->next->link);
+    iter->prev = iter->next;
+    iter->next = next;
+
+    return LIST_OK;
+
+}
+
+
+/* reset list iterator */
+int
+list_iter_reset (Iterator it, const List l)
+{
+
+    list *list = l;
+    list_iterator *iter = it;
+
+    if (!list || !iter)
+        return LIST_INVALID;
+
+    // reset list iterator
+    iter->prev = NULL;
+    iter->next = list->head;
+
+    return LIST_OK;
+
+}
+
 
