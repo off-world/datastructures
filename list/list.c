@@ -77,7 +77,9 @@ int
 list_init (List *l)
 {
 
-    list *list = malloc (sizeof (list));
+    list *list;
+
+    list = malloc (sizeof (*list));
 
     if (!list)
         return LIST_OUT_OF_MEMORY;
@@ -128,7 +130,7 @@ list_free (List l)
 
 /* retreive first element from list */
 int
-list_first (const List l, Any *element)
+list_first (List l, Any *element)
 {
 
     list *list = l;
