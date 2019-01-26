@@ -113,8 +113,6 @@ main (void)
     
     list_reverse (l);
     
-    list_first (l, &element);
-    
     list_iter_init (&it, l);
     
     while (list_iter_has_next (it)) {
@@ -122,9 +120,10 @@ main (void)
         printf ("%s\n", (char*)element);
     }
     
+    list_first (l, &element);
+    list_lpop (l, &element);
     list_rpop (l, NULL);
     list_pop_at (l, 1, &element);
-    list_lpop (l, &element);
     
     list_iter_free (it);
     list_free (l);
