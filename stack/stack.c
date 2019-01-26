@@ -68,7 +68,9 @@ int
 stack_init (Stack *s)
 {
 
-    stack *stack = malloc (sizeof (stack));
+    stack *stack;
+    
+    stack = malloc (sizeof (*stack));
 
     if (!stack)
         return STACK_OUT_OF_MEMORY;
