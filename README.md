@@ -96,10 +96,6 @@ main (void)
 
 #include "list.h"
 
-static void list_print (Any value) {
-    printf("%s ", (char*)value);
-}
-
 int
 main (void)
 {
