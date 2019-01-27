@@ -36,20 +36,20 @@
 /* ok */
 #define LIST_OK                    1
 
-/* invalid or uninitialized list */
-#define LIST_INVALID               0
+/* list iterator exhausted */
+#define LIST_ITERATOR_EXHAUSTED    0
 
 /* empty list */
-#define LIST_EMPTY                -1
+#define LIST_EMPTY                 0
+
+/* invalid or uninitialized list */
+#define LIST_INVALID              -1
 
 /* index out of list range */
 #define LIST_INDEX_OUT_OF_RANGE   -2
 
 /* out of memory */
 #define LIST_OUT_OF_MEMORY        -3
-
-/* list iterator exhausted */
-#define LIST_ITERATOR_EXHAUSTED    0
 
 
 /* pointer to the internally managed list datastructure */
