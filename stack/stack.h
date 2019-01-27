@@ -36,17 +36,17 @@
 /* ok */
 #define STACK_OK                    1
 
-/* invalid or uninitialized stack */
-#define STACK_INVALID               0
+/* stack iterator exhausted */
+#define STACK_ITERATOR_EXHAUSTED    0
 
 /* empty stack */
-#define STACK_EMPTY                -1
+#define STACK_EMPTY                 0
+
+/* invalid or uninitialized stack */
+#define STACK_INVALID              -1
 
 /* out of memory */
 #define STACK_OUT_OF_MEMORY        -2
-
-/* stack iterator exhausted */
-#define STACK_ITERATOR_EXHAUSTED    0
 
 
 /* pointer to the internally managed stack datastructure */
