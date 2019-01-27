@@ -47,8 +47,8 @@ main (void)
     Hashmap h;
     Iterator it;
     
-    Key k;
-    Any v;
+    Key key;
+    Any value;
     
     map_init (&h);
     
@@ -60,12 +60,12 @@ main (void)
     map_iter_init (&it, h);
     
     while (map_iter_has_next (it)) {
-        map_iter_next (it, &k, &v);
+        map_iter_next (it, &key, &value);
         
-        printf ("%s => %d\n", k, v);
+        printf ("%s => %d\n", key, value);
     }
     
-    map_lookup (h, "a", &v);
+    map_lookup (h, "a", &value);
     map_remove (h, "c");
     
     map_iter_free (it);
@@ -129,7 +129,7 @@ main (void)
     while (list_iter_has_next (it)) {
         list_iter_next (it, &element);
         
-        printf ("%s\n", (char*)element);
+        printf ("%s\n", element);
     }
     
     list_first (l, &element);
@@ -189,7 +189,7 @@ main (void)
     while (stack_iter_has_next (it)) {
         stack_iter_next (it, &element);
         
-        printf ("%s\n", (char*)element);
+        printf ("%s\n", element);
     }
     
     stack_peek (s, &element);
