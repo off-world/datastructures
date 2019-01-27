@@ -18,13 +18,14 @@ ___
 
 #### Time Complexity of Hashmap Operations
 
-|         |                                                                      |
-|---------|----------------------------------------------------------------------|
-| insert  | `O(1)` [amortized](https://en.wikipedia.org/wiki/Amortized_analysis) |
-| lookup  | `O(1)`                                                               |
-| remove  | `O(1)`                                                               |
-| count   | `O(1)`                                                               |
-| iterate | `O(n)`                                                               |
+|          |                                                                      |
+|----------|----------------------------------------------------------------------|
+| insert   | `O(1)` [amortized](https://en.wikipedia.org/wiki/Amortized_analysis) |
+| lookup   | `O(1)`                                                               |
+| remove   | `O(1)`                                                               |
+| contains | `O(1)`                                                               |
+| count    | `O(1)`                                                               |
+| iterate  | `O(n)`                                                               |
 
 #### Space Complexity of Hashmap Datastructure
 
