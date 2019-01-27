@@ -66,6 +66,7 @@ main (void)
     map_lookup (h, "a", &v);
     map_remove (h, "c");
     
+    map_iter_free (it);
     map_free (h);
     
     return 0;
