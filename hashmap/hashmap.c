@@ -447,9 +447,10 @@ map_iter_init (Iterator *it, const Hashmap hm)
     if (!iter)
         return MAP_OUT_OF_MEMORY;
 
+    // set map to iterate
     iter->map = map;
 
-    // iterate table
+    // point iterator to first binding
     for (i = 0; i <= map->size; ++i) {
 
         iter->next = i;
@@ -482,7 +483,7 @@ map_iter_free (Iterator it)
 }
 
 
-/* test for next element in hashmap iterator */
+/* test for next binding in hashmap iterator */
 int
 map_iter_has_next (const Iterator it)
 {
@@ -552,9 +553,10 @@ map_iter_reset (Iterator it, const Hashmap hm)
     if (!map || !iter)
         return MAP_INVALID;
 
-    // reset hashmap iterator
+    // reset map to iterate
     iter->map = map;
 
+    // point iterator to first binding
     for (i = 0; i <= map->size; ++i) {
 
         iter->next = i;
