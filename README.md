@@ -39,24 +39,32 @@ space consumption depends heavily on growth rate and load factor threshold. A hi
 
 #include "hashmap.h"
 
-static void hashmap_print (Key key, Any value) {
-    printf("%s => %s\n", (char*)key, (char*)value);
-}
 
 int
 main (void)
 {
     Hashmap h;
+    Iterator it;
     
-    Key k = "key";
-    Any v = "val";
+    Key k;
+    Any v;
     
     map_init (&h);
     
-    map_insert (h, k, v);
-    map_lookup (h, k, &v);
+    map_insert (h, "a", (int*) 1);
+    map_insert (h, "b", (int*) 2);
+    map_insert (h, "c", (int*) 3);
+    map_insert (h, "d", (int*) 4);
     
-    map_foreach (h, hashmap_print);
+    map_iter_init (&it, h);
+    
+    while (map_iter_has_next (it)) {
+        map_iter_next (it, &k, &v);
+        printf ("%s => %d", (char*)k, (int)v);
+    }
+    
+    map_lookup (h, "a", &v);
+    map_remove (h, "c");
     
     map_free (h);
     
