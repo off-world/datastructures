@@ -14,7 +14,7 @@ ___
 
 ### Hashmap
 
-[open addressing](https://en.wikipedia.org/wiki/Open_addressing) hashmap using [linear probing](https://en.wikipedia.org/wiki/Linear_probing). table size is ensured to stay prime even upon resize to prevent clustering. default hash algorithm is [djb2](http://www.cse.yorku.ca/~oz/hash.html).
+[open addressing](https://en.wikipedia.org/wiki/Open_addressing) hashmap with [linear probing](https://en.wikipedia.org/wiki/Linear_probing). table size is ensured to stay prime even upon resize to prevent clustering. default hash algorithm is [djb2](http://www.cse.yorku.ca/~oz/hash.html).
 
 #### Time Complexity of Hashmap Operations
 
@@ -26,7 +26,7 @@ ___
 | count   | `O(1)`                                                               |
 | iterate | `O(n)`                                                               |
 
-#### Space Complexity for Hashmap
+#### Space Complexity of Hashmap Datastructure
 
 `O(n)`
 
@@ -66,7 +66,7 @@ main (void)
 
 ### Linked List
 
-[XOR linked list](https://en.wikipedia.org/wiki/XOR_linked_list), a memory efficient implementation of a doubly linked list. Each node only stores one address field containing the bitwise XOR of the memory addresses from the previous and next node.
+a [memory efficient implementation](https://en.wikipedia.org/wiki/XOR_linked_list) of a doubly [linked list](https://en.wikipedia.org/wiki/Linked_list). Each node only stores one address field containing the bitwise XOR of the memory addresses from the previous and next node.
 
 #### Time Complexity of Linked List Operations
 
@@ -85,7 +85,7 @@ main (void)
 | len     | `O(1)` |
 | iterate | `O(n)` |
 
-#### Space Complexity for Linked List
+#### Space Complexity of Linked List Datastructure
 
 `O(n)`
 
@@ -134,7 +134,7 @@ main (void)
 
 ### Stack
 
-Simple [Stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)).
+simple [Stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)).
 
 #### Time Complexity of Stack Operations
 
@@ -146,7 +146,7 @@ Simple [Stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)).
 | size    | `O(1)` |
 | iterate | `O(n)` |
 
-#### Space Complexity for Stack
+#### Space Complexity of Stack Datastructure
 
 `O(n)`
 
