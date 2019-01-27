@@ -33,20 +33,20 @@
 /* ok */
 #define MAP_OK                    1
 
-/* invalid or uninitialized hashmap */
-#define MAP_INVALID               0
-
 /* no binding for key */
-#define MAP_KEY_NOT_FOUND        -1
+#define MAP_KEY_NOT_FOUND         0
+
+/* hashmap iterator exhausted */
+#define MAP_ITERATOR_EXHAUSTED    0
+
+/* invalid or uninitialized hashmap */
+#define MAP_INVALID              -1
 
 /* out of memory */
 #define MAP_OUT_OF_MEMORY        -2
 
 /* cannot find slot */
 #define MAP_PROBING_FAILED       -3
-
-/* hashmap iterator exhausted */
-#define MAP_ITERATOR_EXHAUSTED    0
 
 
 /* pointer to the internally managed hashmap datastructure */
@@ -76,6 +76,9 @@ extern int map_insert (Hashmap hm, const Key key, const Any value);
 
 /* remove binding from hashmap */
 extern int map_remove (Hashmap hm, const Key key);
+
+/* test if hashmap contains binding with given key */
+extern int map_contains (const Hashmap hm, const Key key);
 
 /* retreive current count of bindings from hashmap*/
 extern int map_count (const Hashmap hm, size_t *count);

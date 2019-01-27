@@ -411,6 +411,40 @@ map_remove (Hashmap hm, Key key)
 }
 
 
+/* test if hashmap contains binding with given key */
+int
+map_contains (const Hashmap hm, const Key key)
+{
+
+    size_t i, idx;
+
+    hashmap *map = hm;
+
+    if (!map)
+        return MAP_INVALID;
+
+    // get slot index for key
+    idx = hash (key) % map->size;
+
+    // linear probing
+    for (i = 0; i < LINEAR_PROBING_MAX_SEQUENCE; ++i) {
+
+        // slot at index has no binding
+        if (!map->table[idx].key)
+            break;
+
+        // slot at index has binding and keys match
+        if (strcmp (map->table[idx].key, key) == 0)
+            return MAP_OK;
+
+        idx = (idx + LINEAR_PROBING_INTERVAL) % map->size;
+    }
+
+    return MAP_KEY_NOT_FOUND;
+
+}
+
+
 /* retreive current count of bindings from hashmap */
 int
 map_count (Hashmap hm, size_t *count)
