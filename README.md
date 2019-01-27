@@ -51,16 +51,17 @@ main (void)
     
     map_init (&h);
     
-    map_insert (h, "a", (int*) 1);
-    map_insert (h, "b", (int*) 2);
-    map_insert (h, "c", (int*) 3);
-    map_insert (h, "d", (int*) 4);
+    map_insert (h, "a", 1);
+    map_insert (h, "b", 2);
+    map_insert (h, "c", 3);
+    map_insert (h, "d", 4);
     
     map_iter_init (&it, h);
     
     while (map_iter_has_next (it)) {
         map_iter_next (it, &k, &v);
-        printf ("%s => %d", (char*)k, (int)v);
+        
+        printf ("%s => %d\n", k, v);
     }
     
     map_lookup (h, "a", &v);
@@ -126,6 +127,7 @@ main (void)
     
     while (list_iter_has_next (it)) {
         list_iter_next (it, &element);
+        
         printf ("%s\n", (char*)element);
     }
     
@@ -185,6 +187,7 @@ main (void)
     
     while (stack_iter_has_next (it)) {
         stack_iter_next (it, &element);
+        
         printf ("%s\n", (char*)element);
     }
     
