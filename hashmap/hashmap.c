@@ -1,7 +1,7 @@
 /**
  * hashmap.c
  *
- * implementation of an open addressing hashmap using linear probing.
+ * implementation of an open addressing hashmap with linear probing.
  *
  * Copyright (c) 2019, Tobias Heilig
  * All rights reserved.
@@ -39,24 +39,23 @@
 
 
 /* initial table size */
-#define INITIAL_SIZE 257
+#define INITIAL_SIZE                    257
 
 /* exceeding this ratio between bindings and
  * table size will trigger a resize operation */
-#define LOAD_FACTOR_THRESHOLD 0.5
+#define LOAD_FACTOR_THRESHOLD           0.5
 
 /* factor by which the table size will
  * grow on resize operations */
-#define GROWTH_RATE 2
+#define GROWTH_RATE                     2
 
 /* interval between probes */
-#define LINEAR_PROBING_INTERVAL 1
+#define LINEAR_PROBING_INTERVAL         1
 
 /* maximum probing tries */
-#define LINEAR_PROBING_MAX_SEQUENCE 16
+#define LINEAR_PROBING_MAX_SEQUENCE     16
 
 
-/* key-value pair */
 typedef struct {
     /* unique key */
     Key key;
@@ -66,7 +65,6 @@ typedef struct {
 } binding;
 
 
-/* hashmap datastructure */
 typedef struct {
     /* table size */
     size_t size;
@@ -78,13 +76,13 @@ typedef struct {
 } hashmap;
 
 
-int map_init (Hashmap *hm);
-int map_free (Hashmap hm);
-int map_lookup (Hashmap hm, Key key, Any *value);
-int map_insert (Hashmap hm, Key key, Any value);
-int map_remove (Hashmap hm, Key key);
-int map_foreach (Hashmap hm, PFIter f);
-int map_count (Hashmap hm, size_t *count);
+typedef struct {
+    /* index of next binding in hashtable */
+    size_t next;
+    /* address of hashmap */
+    hashmap *map;
+
+} hashmap_iterator;
 
 
 /* hashing algorithm */
@@ -413,31 +411,6 @@ map_remove (Hashmap hm, Key key)
 }
 
 
-/* iterate hashmap and call f for each key-value pair */
-int
-map_foreach (Hashmap hm, PFIter f)
-{
-
-    size_t i;
-
-    hashmap *map = hm;
-
-    if (!map)
-        return MAP_INVALID;
-
-    // iterate table
-    for (i = 0; i < map->size; ++i) {
-        // slot at index has binding
-        if (map->table[i].key)
-            (*f) (map->table[i].key, map->table[i].value);
-
-    }
-
-    return MAP_OK;
-
-}
-
-
 /* retreive current count of bindings from hashmap */
 int
 map_count (Hashmap hm, size_t *count)
@@ -454,3 +427,143 @@ map_count (Hashmap hm, size_t *count)
 
 }
 
+
+/* initialize hashmap iterator */
+int
+map_iter_init (Iterator *it, const Hashmap hm)
+{
+
+    size_t i;
+
+    hashmap_iterator *iter;
+
+    hashmap *map = hm;
+
+    if (!map)
+        return MAP_INVALID;
+
+    iter = malloc (sizeof (hashmap_iterator));
+
+    if (!iter)
+        return MAP_OUT_OF_MEMORY;
+
+    iter->map = map;
+
+    // iterate table
+    for (i = 0; i <= map->size; ++i) {
+
+        iter->next = i;
+
+        // slot at index has binding or iterator is exhausted
+        if (i == map->size || map->table[i].key)
+            break;
+    }
+
+    *it = iter;
+
+    return MAP_OK;
+
+}
+
+/* delete hashmap iterator */
+int
+map_iter_free (Iterator it)
+{
+
+    hashmap_iterator *iter = it;
+
+    if (!iter)
+        return MAP_INVALID;
+
+    free (iter);
+
+    return MAP_OK;
+
+}
+
+
+/* test for next element in hashmap iterator */
+int
+map_iter_has_next (const Iterator it)
+{
+
+    hashmap_iterator *iter = it;
+
+    if (!iter)
+        return MAP_INVALID;
+
+    if (iter->next == iter->map->size)
+        return MAP_ITERATOR_EXHAUSTED;
+
+    return MAP_OK;
+
+}
+
+
+/* retreive next binding from hashmap iterator */
+int
+map_iter_next (Iterator it, Key *key, Any *value)
+{
+
+    size_t i;
+
+    hashmap_iterator *iter = it;
+
+    if (!iter)
+        return MAP_INVALID;
+
+    if (iter->next == iter->map->size) {
+        // no next binding
+        *key = NULL;
+        *value = NULL;
+
+        return MAP_ITERATOR_EXHAUSTED;
+    }
+
+    // retreive binding
+    *key = iter->map->table[iter->next].key;
+    *value = iter->map->table[iter->next].value;
+
+    // increment iterator
+    for (i = ++iter->next; i <= iter->map->size; ++i) {
+
+        iter->next = i;
+
+        // slot at index has binding or iterator is exhausted
+        if (i == iter->map->size || iter->map->table[i].key)
+            break;
+    }
+
+    return MAP_OK;
+
+}
+
+
+/* reset hashmap iterator */
+int
+map_iter_reset (Iterator it, const Hashmap hm)
+{
+
+    size_t i;
+
+    hashmap *map = hm;
+    hashmap_iterator *iter = it;
+
+    if (!map || !iter)
+        return MAP_INVALID;
+
+    // reset hashmap iterator
+    iter->map = map;
+
+    for (i = 0; i <= map->size; ++i) {
+
+        iter->next = i;
+
+        // slot at index has binding or iterator is exhausted
+        if (i == map->size || map->table[i].key)
+            break;
+    }
+
+    return MAP_OK;
+
+}

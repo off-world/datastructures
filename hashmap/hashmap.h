@@ -31,32 +31,35 @@
 
 
 /* ok */
-#define MAP_OK                1
+#define MAP_OK                    1
 
 /* invalid or uninitialized hashmap */
-#define MAP_INVALID           0
+#define MAP_INVALID               0
 
 /* no binding for key */
-#define MAP_KEY_NOT_FOUND    -1
+#define MAP_KEY_NOT_FOUND        -1
 
 /* out of memory */
-#define MAP_OUT_OF_MEMORY    -2
+#define MAP_OUT_OF_MEMORY        -2
 
 /* cannot find slot */
-#define MAP_PROBING_FAILED   -3
+#define MAP_PROBING_FAILED       -3
+
+/* hashmap iterator exhausted */
+#define MAP_ITERATOR_EXHAUSTED    0
 
 
 /* pointer to the internally managed hashmap datastructure */
 typedef void *Hashmap;
+
+/* pointer to the internally managed hashmap iterator */
+typedef void *Iterator;
 
 /* key type */
 typedef char *Key;
 
 /* value type */
 typedef void *Any;
-
-/* iteration callback */
-typedef void (*PFIter) (Key, Any);
 
 
 /* initialize hashmap */
@@ -66,17 +69,30 @@ extern int map_init (Hashmap *hm);
 extern int map_free (Hashmap hm);
 
 /* retreive value from hashmap */
-extern int map_lookup (Hashmap hm, Key key, Any *value);
+extern int map_lookup (const Hashmap hm, const Key key, Any *value);
 
 /* update key or create new binding if not exists */
-extern int map_insert (Hashmap hm, Key key, Any value);
+extern int map_insert (Hashmap hm, const Key key, const Any value);
 
 /* remove binding from hashmap */
-extern int map_remove (Hashmap hm, Key key);
-
-/* iterate hashmap and call f for each key-value pair */
-extern int map_foreach (Hashmap hm, PFIter f);
+extern int map_remove (Hashmap hm, const Key key);
 
 /* retreive current count of bindings from hashmap*/
-extern int map_count (Hashmap hm, size_t *count);
+extern int map_count (const Hashmap hm, size_t *count);
+
+/* initialize hashmap iterator */
+extern int map_iter_init (Iterator *it, const Hashmap hm);
+
+/* delete hashmap iterator */
+extern int map_iter_free (Iterator it);
+
+/* test for next binding in hashmap iterator */
+extern int map_iter_has_next (const Iterator it);
+
+/* retreive next binding from hashmap iterator */
+extern int map_iter_next (Iterator it, Key *key, Any *value);
+
+/* reset hashmap iterator */
+extern int map_iter_reset (Iterator it, const Hashmap hm);
+
 
