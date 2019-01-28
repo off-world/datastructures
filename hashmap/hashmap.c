@@ -79,7 +79,7 @@ typedef struct {
 typedef struct {
     /* index of next binding in hashtable */
     size_t next;
-    /* address of hashmap */
+    /* address of hashmap to iterate */
     hashmap *map;
 
 } hashmap_iterator;
